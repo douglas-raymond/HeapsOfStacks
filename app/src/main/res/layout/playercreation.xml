@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/forest1"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@drawable/nametitle"
+        android:id="@+id/imageView3"
+        android:layout_weight="0.01"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:hint="Enter Character Name"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/biotitle"
+        android:id="@+id/imageView2"
+        android:layout_weight="0.01" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:gravity="top"
+        android:id="@+id/editText4"
+        android:hint="Enter Bio"
+        android:layout_weight="0.95"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"/>
+
+    <ImageButton
+        android:layout_width="match_parent"
+        app:srcCompat="@drawable/submitbutton"
+        android:id="@+id/imageButton14"
+        android:layout_weight="0.01"
+        android:background="@android:color/transparent"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:onClick="onSubmit"/>
+
+</LinearLayout>

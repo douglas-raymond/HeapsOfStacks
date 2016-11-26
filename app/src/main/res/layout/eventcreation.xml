@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/forest3"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_weight="0.02">
+
+        <ImageButton
+            android:layout_width="76dp"
+            android:layout_height="55dp"
+            android:id="@+id/imageButton8"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/avatar" />
+
+        <EditText
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Username"
+            android:ems="10"
+            android:id="@+id/editText" />
+
+        <ImageButton
+            android:layout_height="69dp"
+            android:id="@+id/imageButton7"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center|end"
+            android:layout_width="100dp"
+            app:srcCompat="@drawable/nextbutton" />
+
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/option1button"
+        android:id="@+id/imageButton10"
+        android:layout_weight="0.02"
+        android:background="@android:color/transparent" />
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/option2button"
+        android:id="@+id/imageButton11"
+        android:layout_weight="0.02"
+        android:background="@android:color/transparent" />
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/option3button"
+        android:id="@+id/imageButton12"
+        android:layout_weight="0.02"
+        android:background="@android:color/transparent" />
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/option4button"
+        android:id="@+id/imageButton13"
+        android:layout_weight="0.02"
+        android:background="@android:color/transparent" />
+
+</LinearLayout>
