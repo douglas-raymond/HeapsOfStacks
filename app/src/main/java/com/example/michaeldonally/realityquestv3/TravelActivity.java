@@ -1,5 +1,6 @@
 package com.example.michaeldonally.realityquestv3;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -25,7 +26,8 @@ import java.util.List;
 public class TravelActivity extends FragmentActivity implements OnMapReadyCallback {
     MediaPlayer mediaplayer;
     private GoogleMap mMap;
-
+    private Map map;
+    private List<Map> mapList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,44 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         super.onResume();
         setUpMapIfNeeded();
     }
+    public void onLoad(Map map) {
+        mMap.clear();
+        for (int i=0;map.coorList.get(i)!=null;)
+        {
+            LatLng latLng = map.coorList.get(i);
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Event"+String.valueOf(i)));
+        }
+    }
+    public void onSave(final Map map) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+        alert.setTitle("Save your map");
+        alert.setMessage("Please enter a Name for your map");
+
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Save Map", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                map.title = value;
+                mapList.add(map);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
+    }
+    public void drawPts(LatLng source,LatLng dest) {
+
+
+    }
     public void onSearch(View view) {
         EditText location_tf = (EditText) findViewById(R.id.addressName);
         String location = location_tf.getText().toString();
@@ -70,8 +109,9 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             {
+                //Prompt for marker name/confirm over here please
                 mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-
+                map.updateList(latLng);
             }
 
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
