@@ -39,27 +39,28 @@
 
             <ImageButton
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton7"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
-                android:adjustViewBounds="true"
-                android:layout_gravity="center|end"
-                android:layout_width="100dp"
-                android:onClick="onNextButton"
-                android:layout_weight="0.49"
-                android:src="@drawable/nextbutton" />
-
-            <ImageButton
-                android:layout_height="wrap_content"
                 android:id="@+id/ImageButton8"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
                 android:adjustViewBounds="true"
                 android:layout_gravity="center|end"
                 android:layout_width="100dp"
-                android:onClick="onLoad"
+                android:onClick="onSearch"
                 android:layout_weight="0.49"
-                android:src="@drawable/loadmap" />
+                android:src="@drawable/nextbutton" />
+
+            <ImageButton
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton7"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center|end"
+                android:layout_width="100dp"
+                android:onClick="onSave"
+                android:layout_weight="0.49"
+                android:src="@drawable/storebutton" />
+
         </LinearLayout>
 
         <fragment class="com.google.android.gms.maps.SupportMapFragment"
@@ -78,14 +79,15 @@
 
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:inputType="textPostalAddress"
             android:text="Search new point of interest here!"
             android:ems="10"
             android:id="@+id/addressName"
-            android:layout_gravity="center"
-            android:layout_weight="0.1" />
+            android:layout_gravity="left" />
     </LinearLayout>
+
+
 
 </RelativeLayout>
