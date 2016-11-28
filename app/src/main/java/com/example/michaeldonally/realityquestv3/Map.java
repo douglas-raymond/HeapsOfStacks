@@ -41,6 +41,8 @@ public class Map {
         coorList.add(latLng);
     }
 
+    public List<LatLng> getcoorList(){return this.coorList;}
+
     public void delMarker(LatLng latLng) {coorList.remove(latLng);}
 
     public void setMarker(Marker m){

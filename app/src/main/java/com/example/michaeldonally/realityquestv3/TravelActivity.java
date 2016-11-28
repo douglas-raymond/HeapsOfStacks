@@ -1,11 +1,14 @@
 package com.example.michaeldonally.realityquestv3;
 
+import android.*;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -13,12 +16,18 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,17 +36,33 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
     MediaPlayer mediaplayer;
     private GoogleMap mMap;
     private Map map;
+    private Map test;
     private List<Map> mapList;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_travel);
+        setContentView(R.layout.activity_travel_maker);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-       //GameData game = ((GameData)getApplicationContext());
+        //GameData game = ((GameData)getApplicationContext());
 
+        //Populating test map object with test coordinates but not displaying them on GoogleMap object
+        test.updateList(new LatLng(42.335394, -71.073728));
+        test.updateList(new LatLng(43.969515, -99.901813));
+        test.updateList(new LatLng(43.653226, -79.383184));
+        test.updateList(new LatLng(27.012577, 77.177274));
+        test.updateList(new LatLng(40.348416, -75.958429));
+        test.updateList(new LatLng(38.963745, 35.243322));
+        test.updateList(new LatLng(30.608905, -85.719810));
         GameData g = GameData.getInstance();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -47,6 +72,9 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
         mediaplayer = MediaPlayer.create(TravelActivity.this, R.raw.happytravels);
         mediaplayer.start();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -54,14 +82,19 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         super.onResume();
         setUpMapIfNeeded();
     }
+
     public void onLoad(Map map) {
         mMap.clear();
-        for (int i=0;map.coorList.get(i)!=null;)
-        {
-            LatLng latLng = map.coorList.get(i);
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Event"+String.valueOf(i)));
+        //Adding Map markers onto GoogleMap object from the
+        // List<LatLng> coordinate list in Map object
+        // Need to implement server API here to display a list of Map objects
+        for (int i = 0; test.coorList.get(i) != null; i++) {
+            LatLng latLng = test.coorList.get(i);
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Event" + String.valueOf(i)));
         }
+        drawPts(test.getcoorList());
     }
+
     public void onSave(final Map map) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -88,10 +121,12 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         alert.show();
 
     }
-    public void drawPts(LatLng source,LatLng dest) {
 
-
+    public void drawPts(List<LatLng> coorList) {
+        PolylineOptions Routepoints = new PolylineOptions().addAll(coorList);
+        Polyline Route = mMap.addPolyline(Routepoints);
     }
+
     public void onSearch(View view) {
         EditText location_tf = (EditText) findViewById(R.id.addressName);
         String location = location_tf.getText().toString();
@@ -135,7 +170,7 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
 
     private void setUpMap() {
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -148,11 +183,12 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         }
     }
 
-    public void onNextButton(View view){
+    public void onNextButton(View view) {
         Intent intent = new Intent(this, Event_Activity.class);
         mediaplayer.stop();
         startActivity(intent);
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -169,5 +205,41 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Travel Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }
