@@ -13,6 +13,7 @@ import java.util.List;
 public class Map {
     //Since every subsequent marker knows its next marker, the map only needs to know the first to set players on the right direction
     List<LatLng> coorList;
+    List<Marker> markerList;
     Marker firstMarker;
     String title;
     int rating;
@@ -42,6 +43,8 @@ public class Map {
     }
 
     public List<LatLng> getcoorList(){return this.coorList;}
+
+    public void addMarker(Marker marker) {markerList.add(marker);}
 
     public void delMarker(LatLng latLng) {coorList.remove(latLng);}
 
