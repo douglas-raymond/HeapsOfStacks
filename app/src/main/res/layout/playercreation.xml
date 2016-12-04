@@ -19,9 +19,7 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editText2"
-        android:hint="Enter Character Name"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"/>
+        android:hint="Enter Character Name" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -38,9 +36,7 @@
         android:gravity="top"
         android:id="@+id/editText4"
         android:hint="Enter Bio"
-        android:layout_weight="0.95"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"/>
+        android:layout_weight="0.95" />
 
     <ImageButton
         android:layout_width="match_parent"

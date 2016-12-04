@@ -58,10 +58,11 @@
 
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100px"
             android:id="@+id/images"
-            android:layout_weight="0.06"
-            android:background="@color/white"/>
+            android:layout_weight="0.00"
+            android:background="@color/white"
+            android:spinnerMode="dialog"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -76,57 +77,62 @@
             android:layout_below="@+id/imageView4"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="0.04" />
+            android:layout_weight="0.00" />
 
-        <Button
-            android:text="OPTION 1"
-            android:id="@+id/button2"
-            android:background="@drawable/textborder"
-            android:layout_below="@+id/editText3"
-            android:layout_centerHorizontal="true"
-            android:layout_height="60dp"
-            android:layout_weight="0.04"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:onClick="onOptionCreate"/>
+        <TextView
+            android:text="Select Options for Player:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView9"
+            android:background="@color/lightGreen"/>
 
-        <Button
-            android:text="OPTION 4"
-            android:id="@+id/button5"
-            android:background="@drawable/textborder"
-            android:layout_below="@+id/button3"
-            android:layout_alignEnd="@+id/button3"
-            android:layout_height="60dp"
-            android:layout_weight="0.04"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:onClick="onOptionCreate"/>
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="fill_parent"
+            android:layout_height="100px"
+            android:prompt="@string/spinner_prompt"
+            android:layout_weight="0.00"
+            android:background="@color/white"
+            android:spinnerMode="dialog"/>
 
-        <Button
-            android:text="OPTION 2"
-            android:id="@+id/button4"
-            android:background="@drawable/textborder"
-            android:layout_below="@+id/button2"
-            android:layout_alignLeft="@+id/button2"
-            android:layout_alignStart="@+id/button2"
-            android:layout_height="60dp"
-            android:layout_weight="0.04"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:onClick="onOptionCreate"/>
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="fill_parent"
+            android:layout_height="100px"
+            android:prompt="@string/spinner_prompt"
+            android:background="@color/white"
+            android:spinnerMode="dialog"/>
 
-        <Button
-            android:text="OPTION 3"
-            android:id="@+id/button3"
-            android:background="@drawable/textborder"
-            android:layout_below="@+id/button4"
-            android:layout_alignLeft="@+id/button4"
-            android:layout_alignStart="@+id/button4"
-            android:layout_height="60dp"
-            android:layout_weight="0.04"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:onClick="onOptionCreate"/>
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="fill_parent"
+            android:layout_height="100px"
+            android:prompt="@string/spinner_prompt"
+            android:background="@color/white"
+            android:spinnerMode="dialog"/>
+
+        <Spinner
+            android:id="@+id/spinner4"
+            android:layout_width="fill_parent"
+            android:layout_height="100px"
+            android:prompt="@string/spinner_prompt"
+            android:background="@color/white"
+            android:spinnerMode="dialog"/>
+
+        <TextView
+            android:text="Select Encounter Level:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11"
+            android:background="@color/lightGreen"/>
+
+        <Spinner
+            android:id="@+id/spinner5"
+            android:layout_width="fill_parent"
+            android:layout_height="100px"
+            android:prompt="@string/spinner_prompt"
+            android:background="@color/white"
+            android:spinnerMode="dialog"/>
 
     </LinearLayout>
 

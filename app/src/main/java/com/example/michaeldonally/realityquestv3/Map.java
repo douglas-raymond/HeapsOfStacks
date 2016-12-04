@@ -1,9 +1,5 @@
 package com.example.michaeldonally.realityquestv3;
 
-import android.location.Address;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.List;
 
 /**
@@ -11,50 +7,49 @@ import java.util.List;
  */
 
 public class Map {
-    //Since every subsequent marker knows its next marker, the map only needs to know the first to set players on the right direction
-    List<LatLng> coorList;
-    List<Marker> markerList;
-    Marker firstMarker;
+    //Every map has exactly 10 markers
+    List<Marker> markers;
+
+    //Every map has a title
     String title;
-    int rating;
-    User user;
+
+    //Every map has a rating between 1 and 5 that is an average of all its ratings
+    double rating;
+
+    //Keeps track of the person that created it
+    String creator;
+
+    //Tracks the number of times that it has been played
     int plays;
 
-    //We will have a full map view not showing your location and one that is just you to the next marker
-    boolean viewType;
+    //Tracks the number of markers that have been completed so we can tell when the map is done
+    int completedMarkers;
 
-    public Map(String n) {
-        //You only need a title to create a map the rest will be carried out in user prompts after title is entered
+    public Map(String n, List<Marker> m) {
         this.title = n;
+        this.markers = m;
+
+        //The rating and the plays will only ever be chaged on the server, here we set the defaults
+        this.rating = 2.5;
+        this.plays = 0;
+        this.completedMarkers = 0;
     }
 
-    public void displayMap() {
-        //Displays the current map (set or markers) scaled to fit together like a map
-        //Idk how we're gonna do this yet
-        //Displays diferently based on map type
+    public Map() {
+
     }
 
-    public void updateMap() {
-        //Will update based on user cordinates
+    public void setCreator(String name) {
+        this.creator = name;
     }
 
-    public void updateList(LatLng latLng) {
-        coorList.add(latLng);
+    //Will be called whenever an event is completed to check if the game has finished
+    public boolean gameFinished() {
+        completedMarkers++;
+        if(completedMarkers == 10){
+            return true;
+        } else {
+            return false;
+        }
     }
-
-    public List<LatLng> getcoorList(){return this.coorList;}
-
-    public void addMarker(Marker marker) {markerList.add(marker);}
-
-    public void delMarker(LatLng latLng) {coorList.remove(latLng);}
-
-    public void setMarker(Marker m){
-        this.firstMarker = m;
-    }
-
-    public void setTitle(String t) {
-        this.title = t;
-    }
-
-
 }

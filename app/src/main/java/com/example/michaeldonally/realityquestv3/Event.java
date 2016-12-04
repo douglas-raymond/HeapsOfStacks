@@ -6,44 +6,48 @@ package com.example.michaeldonally.realityquestv3;
 
 public class Event {
     String name;
-    boolean completed;
-    String reward;
-    String punishment;
-    String flavourText;
-    int exp;
+    String message;
+    String options[];
+    String imageLoc;
 
-    public void hasCompleted(){
-        this.completed = true;
-    }
-
-    public Event(String n, String r, String p, int xp, String ft){
+    public Event(String n, String m, String[] o, String imageLoc){
         this.name = n;
-        this.completed = false;
-        this.reward = r;
-        this.punishment = p;
-        this.exp = xp;
-        this.flavourText = ft;
+        this.message = m;
+        this.options = o;
+        this.imageLoc = imageLoc;
     }
 
-    public String getFlavourText() { return this.flavourText; }
+    public Event() {
+
+    }
+
+    public void setImageLoc(String l) {
+        imageLoc = l;
+    }
+
+    public String getImageLoc() {
+        return imageLoc;
+    }
+
+    public void setName(String n) {
+        name = n;
+    }
+
+    public void setMessage(String m) {
+        message = m;
+    }
+
+    //public void setOption(Option o, int i) {
+    //    this.options[i] = o;
+    //}
 
     public String getName(){
         return this.name;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
+    public String getMessage() {return this.message; }
 
-    public String getReward() {
-        return reward;
-    }
-
-    public String getPunishment() {
-        return punishment;
-    }
-
-    public int getExp(){
-        return exp;
+    public String getOption(int i){
+        return options[i];
     }
 }
