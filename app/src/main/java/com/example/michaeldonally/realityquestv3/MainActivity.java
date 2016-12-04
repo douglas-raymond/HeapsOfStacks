@@ -2,7 +2,6 @@ package com.example.michaeldonally.realityquestv3;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -16,20 +15,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
-    MediaPlayer mediaplayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_screen);
-        mediaplayer = MediaPlayer.create(MainActivity.this, R.raw.realityquesttheme);
-        mediaplayer.start();
+        RequestManager.getInstance(this);
+        setContentView(R.layout.content_main);
     }
 
-    //Takes us to the playCreation screen
-    public void playerCreateInit(View view){
-        Intent intent = new Intent(this, playerCreationActivity.class);
-        mediaplayer.stop();
-        startActivity(intent);
+    //Take us to login screen
+    public void loginInit(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Disclaimer").setMessage("This game is designed by other users and there is a possiblility of being sent somewhere you should not go. If you are under 12 please play with adult supervision");
+        builder.setPositiveButton("Confirm?", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(MainActivity.this, loginActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
 }

@@ -52,7 +52,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class TravelActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class createMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private User user;
     private Marker marker;
 
@@ -63,6 +63,8 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
     protected LocationListener locationListener;
     protected Context context;
     protected Location mLastLocation;
+
+    private List<Marker> markers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,105 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         marker = user.character.currMarker;
         LatLng markerLoc = new LatLng(marker.markerLoc.latitude, marker.markerLoc.longitude);
         drawPts(userLoc, markerLoc);
+    }
+
+    public void onSubmit(View view) {
+        EditText location_tf = (EditText) findViewById(R.id.addressName);
+        String location = location_tf.getText().toString();
+
+        List<Address> addressList = null;
+        if (location != null || !location.equals("")) {
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Address address = addressList.get(0);
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            {
+                //Prompt for marker name/confirm over here please
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            }
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        }
+    }
+
+    //Function to save a marker whos location is in the input address box
+    public void onSave(View view) {
+        EditText location_tf = (EditText) findViewById(R.id.addressName);
+        String location = location_tf.getText().toString();
+
+        List<Address> addressList = null;
+        if (location != null || !location.equals("")) {
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Address address = addressList.get(0);
+
+            //Prompts user to name the marker then creates a new marker with that name
+            final Coor markerLoc = new Coor(address.getLatitude(), address.getLongitude());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Enter Marker Name:");
+
+            final EditText input = new EditText(this);
+            builder.setView(input);
+
+            builder.setPositiveButton("Confirm?", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                    Marker newMarker = new Marker(input.getText().toString(), markerLoc);
+
+                    //Add newMarker to our marker list
+                    markers.add(newMarker);
+
+                    TextView markerListGUI = (TextView)findViewById(R.id.markerList);
+                    markerListGUI.append("\n    " + newMarker.name);
+
+                    //Check if there are ten markers
+                    if(markers.size() >= 10) {
+                        finishMap();
+                    }
+                }
+            });
+            builder.setNegativeButton("Cancel", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+        }
+    }
+
+    //Called when there are ten markers in the markers list
+    public void finishMap() {
+        EditText mapName = (EditText)findViewById(R.id.mapName);
+
+        Map newMap = new Map(mapName.getText().toString(), markers);
+
+        //Sends new map to the server
+        user.createMap(newMap);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Your new map has been saved on the server!");
+
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(createMapActivity.this, selectContentToCreateAcitivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public LatLng getCurrentPos() {
@@ -182,23 +283,6 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         if (mLastLocation != null) {
             //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
             //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }
-
-        //To continually update the compass info
-        TextView compass = (TextView)findViewById(R.id.compass);
-        Coor markerLoc = new Coor(marker.markerLoc.latitude, marker.markerLoc.longitude);
-
-        LatLng userLoc = getCurrentPos();
-        Coor userCoor = new Coor(userLoc.latitude, userLoc.longitude);
-
-        float distance = userCoor.distanceTo(markerLoc);
-
-        //If the user is within 15 meters go to the event screen otherwise just update the compass
-        if(distance < 15) {
-            Intent intent = new Intent(TravelActivity.this, eventActivity.class);
-            startActivity(intent);
-        } else {
-            compass.setText("\n\n\n" + distance);
         }
     }
 

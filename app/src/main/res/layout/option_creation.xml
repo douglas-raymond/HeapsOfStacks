@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/forest3">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:layout_height="69dp">
+
+            <ImageButton
+                android:layout_width="76dp"
+                android:layout_height="55dp"
+                android:id="@+id/imageButton8"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:src="@drawable/avatar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:layout_weight="1"
+                android:text="Username"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:layout_height="69dp"
+                android:id="@+id/imageButton7"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center|end"
+                android:layout_width="100dp"
+                android:src="@drawable/nextbutton" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/imageView9"
+            android:src="@drawable/option"
+            android:layout_below="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText7"
+            android:hint="Option Text"
+            android:background="@android:color/transparent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/imageView10"
+            android:src="@drawable/result"
+            android:layout_height="50dp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:text="+1HP"
+                android:layout_height="match_parent"
+                android:id="@+id/radioButton"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="30sp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_width="365dp" />
+
+            <RadioButton
+                android:text="Nothing Happens"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButton2"
+                android:textSize="30sp"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:layout_gravity="right"
+                android:layout_width="365dp" />
+
+            <RadioButton
+                android:text="-1HP"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButton3"
+                android:textSize="30sp"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:layout_gravity="right"
+                android:layout_width="365dp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

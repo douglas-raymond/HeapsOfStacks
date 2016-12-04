@@ -8,36 +8,20 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Globals"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/icon"
+        android:label="Reality Quest TEST"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".playerCreationActivity" />
-        <activity android:name=".TravelActivity" />
-        <activity android:name=".Event_Activity" />
-        <activity android:name=".Event_Activity2" />
-        <activity android:name=".QuestEnd" />
-        <application android:name=".GameData" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBf3zC-ptrAAi7LlvIicITqbN6vgT_Lm6U"/>
+
         <meta-data
-            android:name="com.google.android.maps.v2.AIzaSyBf3zC-ptrAAi7LlvIicITqbN6vgT_Lm6U"
-            android:value="AIzaSyBf3zC-ptrAAi7LlvIicITqbN6vgT_Lm6U" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".MainActivity"
@@ -48,10 +32,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Event_Activity" />
-        <activity android:name=".Event_Activity2" />
-        <activity android:name=".Event_Activity3" />
-        <activity android:name=".QuestEnd"></activity>
+        <activity android:name=".loginActivity" />
+        <activity android:name=".gameTypeSelectActivity" />
+        <activity android:name=".SelectMapActivity" />
+        <activity android:name=".selectContentToCreateAcitivity" />
+        <activity android:name=".create_event" />
+        <activity android:name=".createOptionActivity" />
+        <activity android:name=".createMapActivity" />
+        <activity android:name=".TravelActivity" />
+        <activity android:name=".eventActivity" />
+        <activity android:name=".questEnd"></activity>
     </application>
 
 </manifest>
