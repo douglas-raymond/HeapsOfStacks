@@ -1,0 +1,5 @@
+9:Progress Update: Decided to split the map and event creation process: Changed GUI to have choice of map or event creation
+
+Group meeting: decided to have creation of events separate from creating map markers
+Changed creator choices to: New Map or New Event
+Made additional changes to event creation screen: click on removed image button, made click on screen to add sprite image
