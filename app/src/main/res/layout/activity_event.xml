@@ -15,8 +15,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:layout_height="69dp">
 
             <ImageButton
                 android:layout_width="76dp"
@@ -39,12 +39,13 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:background="@color/lightGreen"
             android:id="@+id/eventName"
-            android:layout_weight="0.01" />
+            android:layout_weight="0.01"
+            android:background="@drawable/textborder"
+            android:layout_height="48dp"
+            android:gravity="center" />
 
         <ImageView
             android:id="@+id/image"
@@ -61,11 +62,11 @@
             android:gravity="center_vertical|center"
             android:background="@drawable/textborder"
             android:layout_gravity="bottom"
-            android:layout_height="65dp"
             android:layout_below="@+id/imageView4"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="0.03" />
+            android:layout_weight="0.03"
+            android:layout_height="50dp" />
 
         <Button
             android:id="@+id/opt1"
