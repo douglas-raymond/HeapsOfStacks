@@ -1,0 +1,12 @@
+Week of October 3rd
+
+This week I spent most of my time figuring out how the server and database
+would be designed. I figured out the different types of requests that the app
+would send to the server, and decided how best to handle them and how to store
+the data in the database. In the end, there are 8 different types of requests
+and the database has 5 tables: users, maps, events, markers, and options. 
+
+I decided to use node.js for the server and SQLite for the database since that
+is what I’m familiar with, having used both technologies before. The server is
+a simple one, so learning an entirely new technology wouldn’t be a very good
+investment of my time. 

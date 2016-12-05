@@ -1,0 +1,8 @@
+Week of October 10th
+
+I most of the drudgework done on the server, setting it up to connect to the
+database and handle requests from the client. I also started working on
+implementing the different methods, but only a few of them are currently
+functional. The user requests (GetUserDetails and UpdateUserDetails) are
+complete, I just need to add some error handling, and the creator requests
+(UploadMap and UploadEvent) are taking shape. 

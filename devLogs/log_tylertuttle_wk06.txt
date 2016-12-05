@@ -1,0 +1,5 @@
+Week of October 24th
+
+Reading week, I didn’t spend much time working on the project this week. I did
+set up the various classes that I would need on the client side but for the
+most part they’re all empty.

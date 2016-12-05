@@ -1,0 +1,15 @@
+Week of November 14th: Deliverable 2
+
+This week we had to present our demo. In the demo, the maps/events were
+hard-coded in so most of my code was not on display this week. We did go over
+how the server would function and what data would be sent back and forth
+however.
+
+I finished changing the way that synchronous requests are handled. Now, the
+activity that wants to send the request will provide a listener object that
+will return whatever the response is supposed to be (for example getUserDetails
+takes a ResonseListener<User> object as a parameter). This way, the activity
+can handle how it deals with having to wait for a response from the server as
+well as making it simpler to implement. With that out of the way, I can move on
+to implementing the various methods that will make specific requests to the
+server.

@@ -1,0 +1,12 @@
+Week of October 31st
+
+This week I cleaned up the server code, handling any errors as well as removing
+any test variables or functions I had created. As of right now the server is
+pretty much 100% complete, at least for the purposes of the project. All the
+functionality that we need is done and tested.
+
+I began implementing the request code on the client side, using an API called
+Volley from the Android Open Source Project. The way I have it set up is to
+wrap the code for sending requests and handling responses with Volley in a
+singleton class, and have methods in that class that expose the various API
+calls to the server.

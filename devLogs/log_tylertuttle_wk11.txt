@@ -1,0 +1,5 @@
+Week of November 28th: Deliverable 3
+
+Most of this week was spent fixing any minor bugs or issues in the code, since
+all the functionality was already implemented. We also has our oral exam this
+week, so a lot of our time was spent preparing for that.

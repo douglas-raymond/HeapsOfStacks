@@ -1,0 +1,12 @@
+Week of November 7th
+
+I spent most of the week trying to fix an issue with sending certain requests.
+For example, the GetMapDetails method should return a Map object, but since the
+requests in Volley are asynchronous you need to do them in a slightly different
+way. To send synchronous requests, you must create a new thread and use a
+Future, which is an object that represents the result of an asynchronous method
+call. I spent most of the week trying to figure out how to do that in a nice
+manner, but in the end, I decided to change the way you call these methods: a
+ResponseListener is provided by the activity that calls the method, allowing
+all the requests to be asynchronous while still making sure that the user
+cannot continue before important information is sent to/from the server.

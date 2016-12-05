@@ -1,0 +1,7 @@
+Week of November 21st
+
+Once I had the new way of sending requests in place, I could finish the actual
+methods that would communicate with the User object. This involved either
+creating a JSON object and sending it to the server or parsing a JSON string
+that was sent from the server and returning the object to the User class. I had
+to do this separately for each of the 8 methods that I defined on the server.

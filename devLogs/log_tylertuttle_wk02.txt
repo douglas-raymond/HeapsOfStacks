@@ -1,0 +1,6 @@
+Week of September 26th: Deliverable 1
+
+This week we mostly discussed how we would split up the work. I was given the
+task of writing the server for our app. We also created a rough UML diagram to
+demonstrate how our system would work as well as preparing for the upcoming
+project proposal presentation.

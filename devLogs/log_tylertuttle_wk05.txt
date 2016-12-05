@@ -1,0 +1,7 @@
+Week of October 17th
+
+I finished the work on getting the server to handle the different requests that
+the user would send from the app, implementing the remaining methods. Now all 8
+of the methods are completely functional, although I still need to go in and
+make sure I’m checking for errors and test everything to make sure it works
+without any bugs.
