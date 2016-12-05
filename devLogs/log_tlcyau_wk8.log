@@ -3,3 +3,7 @@
 Finished the Player creation screen
 Changed the load/new map option to just show a list of maps
 Finished player side event screen
+
+playercreation.xml
+playerevent.xml
+playerquestend.xml
