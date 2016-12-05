@@ -23,6 +23,8 @@ public class Coor {
         return dist;
     }
 
+    public Coor() {}
+
     public Coor(double lat, double lon) {
         this.longitude = lon;
         this.latitude = lat;

@@ -26,6 +26,8 @@ public class PlayerCharacter {
     }
     public String getCName() {return this.characterName;}
 
+    public PlayerCharacter() {}
+
     public PlayerCharacter(String n, String b) {
         //All other attributes dont get assigned right away
         this.characterName = n;

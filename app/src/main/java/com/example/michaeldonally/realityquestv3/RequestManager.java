@@ -2,262 +2,277 @@ package com.example.michaeldonally.realityquestv3;
 
 import java.util.ArrayList;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.TimeUnit;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.*;
+import com.android.volley.toolbox.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /* Sources:
  * https://developer.android.com/training/volley/requestqueue.html
  * http://stackoverflow.com/questions/28172496/android-volley-how-to-isolate-requests-in-another-class
  */
 
-public class RequestManager {
-    private static RequestManager instance;
+class RequestManager {
+    private static RequestManager mInstance;
 
-    private RequestQueue queue;
-    private String baseUrl;
+    private RequestQueue mQueue;
+    private String mBaseUrl;
 
     private RequestManager(Context context) {
-        queue = Volley.newRequestQueue(context);
+        mQueue = Volley.newRequestQueue(context);
 
-        // THIS IS MY LAPTOP'S IP ADDRESS, IT MIGHT CHANGE!!
-        baseUrl =  "http://174.93.56.12:1234/";
+        // TODO Probably shouldn't be hosting the server from my laptop...
+        mBaseUrl = "http://70.29.104.101:1234";
     }
 
-    public static synchronized RequestManager getInstance(Context context) {
-        if (instance == null) {
-            instance = new RequestManager(context);
+    static synchronized RequestManager getInstance() {
+        if (mInstance == null) {
+            throw new IllegalStateException("RequestManager not initialized, call RequestManager#setContext(Context) first.");
         }
 
-        return instance;
+        return mInstance;
     }
 
-    public static synchronized RequestManager getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("Class not initialized, call getInstance(Context) first.");
-        }
-
-        return instance;
+    /**
+     * Call this once, from the main activity, to create the RequestManager object.
+     */
+    static synchronized void setContext(Context context) {
+        mInstance = new RequestManager(context);
     }
 
-    /* Private method to handle requests, public methods just pass along the necessary parmeters */
-    private void sendAsynchronousRequest(int method, String url, JSONObject params, final ResponseListener<JSONObject> listener) {
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (response != null) {
-                    listener.getResult(response);
-                }
-            }
-        };
-
+    private void sendRequest(int method, String url, JSONObject parameters, final Response.Listener<JSONObject> responseListener) {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error.networkResponse != null) {
-                    try {
-                        listener.getResult(new JSONObject("{}"));
-                    } catch (JSONException e) {
-                        // TODO: handle JSON errors
-                    }
-                }
+                error.printStackTrace();
             }
         };
 
-        JsonObjectRequest request = new JsonObjectRequest(method, url, params, responseListener, errorListener);
-
-        queue.add(request);
+        System.out.println("Adding request to the queue.");
+        JsonObjectRequest request = new JsonObjectRequest(method, url, parameters, responseListener, errorListener);
+        mQueue.add(request);
     }
 
-    private void sendBlockingRequest(int method, String url, JSONObject params, final ResponseListener<JSONObject> listener) {
-        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-
-        JsonObjectRequest request = new JsonObjectRequest(method, url, params, future, future);
-
-        queue.add(request);
-
-        try {
-            JSONObject response = future.get(30, TimeUnit.SECONDS);
-
-            listener.getResult(response);
-        } catch (InterruptedException e) {
-            // Exception handling
-        } catch (ExecutionException e) {
-            // Exception handling
-        } catch (TimeoutException e) {
-            // Exception handling
-        }
-    }
-
-    /* [GET] GetUserDetails */
-    public User getUserDetails(String username, String password) {
-        final User user = new User();
-
-        // Set up information for the request
+    void getUserDetails(String username, String password, final ResponseListener<User> listener) {
         int method = Request.Method.GET;
-        String url = baseUrl + "/user/details?username=" + username + "&password=" + password;
+        String url = mBaseUrl + "/user/details?username=" + username + "&password=" + password;
+        JSONObject parameters = null;
 
-        sendBlockingRequest(method, url, null, new ResponseListener<JSONObject>() {
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: convert JSON object into User object
-            }
-        });
+            public void onResponse(JSONObject response) {
+                System.out.println("Response get!");
 
-        return user;
+                User user = new User();
+
+                try {
+                    user.username = response.getString("username");
+                    user.password = response.getString("password");
+
+                    user.character = new PlayerCharacter();
+                    user.character.characterName = response.getString("name");
+                    user.character.playerBio = response.getString("bio");
+                    user.character.level = response.getInt("level");
+                    user.character.healthPoints = response.getInt("hitPoints");
+                } catch (JSONException|NullPointerException e) {
+                    e.printStackTrace();
+                    listener.getResult(null);
+                }
+
+                listener.getResult(user);
+            }
+        };
+
+        sendRequest(method, url, parameters, responseListener);
     }
 
-    /* [POST] UpdateUserDetails */
-    public void updateUserDetails(User userDetails) {
-        // Set up information for the request
+    void updateUserDetails(User user) {
         int method = Request.Method.POST;
-        String url = baseUrl + "/user/upload";
-        JSONObject params = null;
+        String url = mBaseUrl + "/user/upload";
+        JSONObject parameters = new JSONObject();
 
         try {
-            params.put("username", userDetails.toString());
+            parameters.put("username", user.username);
+            parameters.put("password", user.password);
+            parameters.put("name", user.character.characterName);
+            parameters.put("bio", user.character.playerBio);
+            parameters.put("level", user.character.level);
+            parameters.put("hitpoints", user.character.healthPoints);
         } catch (JSONException e) {
-            System.err.println("JSONException: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        sendAsynchronousRequest(method, url, params, new ResponseListener<JSONObject>() {
-            @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: does anything even need to go here or is this useless?
-            }
-        });
+        sendRequest(method, url, parameters, null);
     }
 
-    /* [POST] UploadEvent */
-    public void uploadEvent(Event eventDetails) {
-        // Set up information for the request
+    void uploadEvent(Event event) {
         int method = Request.Method.POST;
-        String url = baseUrl + "/creator/upload-event";
-        JSONObject params = null;
+        String url = mBaseUrl + "/creator/upload-event";
+        JSONObject parameters = new JSONObject();
 
         try {
-            // TODO: turn eventDetails into a JSON object
-            params.put("blah", eventDetails.toString());
+            parameters.put("title", event.name);
+            parameters.put("imageId", 0);
+
+            JSONArray options = new JSONArray();
+            for (int i = 0; i < event.options.length; i++) {
+                JSONObject option = new JSONObject();
+                option.put("text", event.options[i]);
+                option.put("reward", event.options[i]);
+                option.put("punishment", event.options[i]);
+                option.put("chance", event.options[i]);
+                options.put(option);
+            }
+            parameters.put("options", options);
         } catch (JSONException e) {
-            System.err.println("JSONException: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        sendAsynchronousRequest(method, url, params, new ResponseListener<JSONObject>() {
-            @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: does anything even need to go here or is this useless?
-            }
-        });
+        sendRequest(method, url, parameters, null);
     }
 
-    /* [POST] UploadMap */
-    public void uploadMap(Map mapDetails) {
-        // Set up information for the request
+    void uploadMap(Map map) {
         int method = Request.Method.POST;
-        String url = baseUrl + "/creator/upload-event";
-        JSONObject params = null;
+        String url = mBaseUrl + "/creator/upload-map";
+        JSONObject parameters = new JSONObject();
 
         try {
-            // TODO: turn mapDetails into a JSON object
-            params.put("blah", mapDetails.toString());
+            parameters.put("title", map.title);
+            parameters.put("creator", map.creator);
+            parameters.put("rating", map.rating);
+            parameters.put("plays", map.plays);
+
+            JSONArray markers = new JSONArray();
+            for (int i = 0; i < map.markers.size(); i++) {
+                JSONObject marker = new JSONObject();
+                marker.put("name", map.markers.get(i).name);
+                marker.put("longitude", map.markers.get(i).markerLoc.longitude);
+                marker.put("latitude", map.markers.get(i).markerLoc.latitude);
+                markers.put(marker);
+            }
+            parameters.put("markers", markers);
         } catch (JSONException e) {
-            System.err.println("JSONException: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        sendAsynchronousRequest(method, url, params, new ResponseListener<JSONObject>() {
-            @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: does anything even need to go here or is this useless?
-            }
-        });
+        sendRequest(method, url, parameters, null);
     }
 
-    /* [GET] GetMapList */
-    public ArrayList<Map> getMapList() {
-        final ArrayList<Map> maps = new ArrayList<>();
-
-        // Set up information for the request
+    void getMapList(final ResponseListener<ArrayList<String>> listener) {
         int method = Request.Method.GET;
-        String url = baseUrl + "/player/get-map-list";
+        String url = mBaseUrl + "/player/get-map-list";
+        JSONObject parameters = null;
 
-        sendBlockingRequest(method, url, null, new ResponseListener<JSONObject>() {
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: convert JSON object into ArrayList<Map> object
-            }
-        });
+            public void onResponse(JSONObject response) {
+                ArrayList<String> mapTitles = new ArrayList<>();
 
-        return maps;
+                try {
+                    JSONArray responseArray = response.getJSONArray("strings");
+
+                    for (int i = 0; i < responseArray.length(); i++) {
+                        mapTitles.add(responseArray.getJSONObject(i).getString("title"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.getResult(null);
+                }
+
+                listener.getResult(mapTitles);
+            }
+        };
+
+        sendRequest(method, url, parameters, responseListener);
     }
 
-    /* [GET] GetMapDetails */
-    public Map getMapDetails(String mapName) {
-        final Map map = new Map();
-
-        // Set up information for the request
+    void getMapDetails(String mapName, final ResponseListener<Map> listener) {
         int method = Request.Method.GET;
-        String url = baseUrl + "/player/get-map?map-name=" + mapName;
+        String url = mBaseUrl + "/player/get-map?mapname=" + mapName;
+        JSONObject parameters = null;
 
-        sendBlockingRequest(method, url, null, new ResponseListener<JSONObject>() {
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: convert JSON object into Map object
-            }
-        });
+            public void onResponse(JSONObject response) {
+                Map map = new Map();
 
-        return map;
+                try {
+                    map.title = response.getString("title");
+                    map.rating = response.getDouble("rating");
+                    map.plays = response.getInt("plays");
+
+                    JSONObject creatorObj = response.getJSONObject("creator");
+                    map.creator = creatorObj.getString("username");
+
+                    JSONArray markers = response.getJSONArray("markers");
+                    for (int i = 0; i < markers.length(); i++) {
+                        JSONObject marker = markers.getJSONObject(i);
+                        map.markers.set(i, new Marker());
+                        map.markers.get(i).name = marker.getString("name");
+                        map.markers.get(i).markerLoc = new Coor();
+                        map.markers.get(i).markerLoc.latitude = marker.getDouble("latitude");
+                        map.markers.get(i).markerLoc.longitude = marker.getDouble("longitude");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.getResult(null);
+                }
+
+                listener.getResult(map);
+            }
+        };
+
+        sendRequest(method, url, parameters, responseListener);
     }
 
-    /* [GET] GetRandomEvent */
-    public Event getRandomEvent() {
-        final Event event = new Event();
-
-        // Set up information for the request
+    void getRandomEvent(final ResponseListener<Event> listener) {
         int method = Request.Method.GET;
-        String url = baseUrl + "/player/get-event";
+        String url = mBaseUrl + "/player/get-event";
+        JSONObject parameters = null;
 
-        sendBlockingRequest(method, url, null, new ResponseListener<JSONObject>() {
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: convert JSON object into Event object
-            }
-        });
+            public void onResponse(JSONObject response) {
+                Event event = new Event();
 
-        return event;
+                try {
+                    event.name = response.getString("title");
+
+                    // ALSO LOAD THE EVENT IMAGE HERE
+                    // lol nvm there are no images
+
+                    JSONArray options = response.getJSONArray("options");
+                    for (int i = 0; i < 4; i++) {
+                        event.options[i] = options.getJSONObject(i).getString("text");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.getResult(null);
+                }
+
+                listener.getResult(event);
+            }
+        };
+
+        sendRequest(method, url, parameters, responseListener);
     }
 
-    /* [POST] RateMap */
-    public void rateMap(String mapName, int rating) {
-        // Set up information for the request
+    void rateMap(String mapName, int rating) {
         int method = Request.Method.POST;
-        String url = baseUrl + "/creator/upload-event";
-        JSONObject params = null;
+        String url = mBaseUrl + "/player/rate-map";
+        JSONObject parameters = new JSONObject();
 
         try {
-            params.put("map-name", mapName);
-            params.put("rating", rating);
+            parameters.put("mapname", mapName);
+            parameters.put("rating", rating);
         } catch (JSONException e) {
-            System.err.println("JSONException: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        sendAsynchronousRequest(method, url, params, new ResponseListener<JSONObject>() {
-            @Override
-            public void getResult(JSONObject jsonObject) {
-                // TODO: does anything even need to go here or is this useless?
-            }
-        });
+        sendRequest(method, url, parameters, null);
     }
 }

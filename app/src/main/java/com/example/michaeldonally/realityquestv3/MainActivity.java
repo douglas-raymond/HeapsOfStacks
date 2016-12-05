@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RequestManager.getInstance(this);
+        RequestManager.setContext(this);
         setContentView(R.layout.content_main);
     }
 
