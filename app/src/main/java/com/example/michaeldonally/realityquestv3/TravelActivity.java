@@ -90,7 +90,8 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         }
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
-
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        userLoc = LatLng(location.getLatitude(),location.getLongtitude());
         //client = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
 
         //Makes the global user the user here
