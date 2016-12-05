@@ -25,6 +25,8 @@ public class Marker {
         //The object is created first and then things are added to it
     }
 
+    public String getName() { return this.name;}
+
     public void setEvent(Event e) {
         this.newEvent = e;
     }

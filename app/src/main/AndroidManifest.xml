@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.michaeldonally.realityquestv3">
 
     <!--
@@ -7,6 +8,7 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
+    <uses-permission android:name="ANDROID.PERMISSION.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,12 +18,20 @@
         android:icon="@drawable/icon"
         android:label="Reality Quest TEST"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:debuggable="true">
         <activity android:name=".playerCreationActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBf3zC-ptrAAi7LlvIicITqbN6vgT_Lm6U" />
+        <meta-data
+            android:name="com.google.android.maps.v2.AIzaSyBf3zC-ptrAAi7LlvIicITqbN6vgT_Lm6U"
+            android:value="AIzaSyBf3zC-ptrAAi7LlvIicITqbN6vgT_Lm6U" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
 
         <activity
             android:name=".MainActivity"
@@ -41,7 +51,8 @@
         <activity android:name=".createMapActivity" />
         <activity android:name=".TravelActivity" />
         <activity android:name=".eventActivity" />
-        <activity android:name=".questEnd"></activity>
+        <activity android:name=".questEnd" />
+        <activity android:name=".questEndLose"></activity>
     </application>
 
 </manifest>

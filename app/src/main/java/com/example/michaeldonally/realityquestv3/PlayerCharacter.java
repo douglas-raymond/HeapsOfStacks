@@ -35,6 +35,11 @@ public class PlayerCharacter {
         this.healthPoints = 10;
     }
 
+    public void setGameMap(Map m){
+        this.gameMap = m;
+        this.currMarker = m.getFirstMarker();
+    }
+
     public void adjustHealth(int num) {
         this.healthPoints += num;
     }
@@ -42,6 +47,7 @@ public class PlayerCharacter {
     public void gainLevel() {
         this.level++;
     }
+    public int getLevel() {return this.level;}
 
     public void setLevel(int i) { this.level = this.level + i;}
 
@@ -52,5 +58,13 @@ public class PlayerCharacter {
     public int getCompletedEvents() {return completedEvents;}
 
     public void setHitPoints(int i) { this.healthPoints = this.healthPoints - i;}
+
+    public Marker getCurrMarker() {
+        return this.currMarker;
+    }
+
+    public void setCurrMarker(){
+        this.currMarker = gameMap.markers.get(this.completedEvents);
+    }
 }
 

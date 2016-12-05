@@ -51,7 +51,7 @@
         android:layout_height="200dp"
         android:id="@+id/next"
         android:scaleType="fitCenter"
-        android:text="Next"
+        android:text="Demo Map"
         android:background="@drawable/buttontest"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

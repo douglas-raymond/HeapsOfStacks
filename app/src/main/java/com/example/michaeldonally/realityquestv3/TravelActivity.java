@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import android.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -87,17 +88,27 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
 
-        client = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
+        //client = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
 
         //Makes the global user the user here
         Globals globals = ((Globals)getApplicationContext());
         user = globals.getUser();
 
         //Initializes the map
-        LatLng userLoc = getCurrentPos();
-        marker = user.character.currMarker;
-        LatLng markerLoc = new LatLng(marker.markerLoc.latitude, marker.markerLoc.longitude);
-        drawPts(userLoc, markerLoc);
+        //LatLng userLoc = getCurrentPos();
+        //marker = user.character.currMarker;
+        //LatLng markerLoc = new LatLng(marker.markerLoc.latitude, marker.markerLoc.longitude);
+        //drawPts(userLoc, markerLoc);
+    }
+
+
+    private synchronized void buildGoogleApiClient() {
+        client = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
     }
 
     public LatLng getCurrentPos() {
@@ -125,9 +136,14 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng sydney = new LatLng(-34, 151);
+
+        //LatLng userLoc = getCurrentPos();
+        //marker = user.character.getCurrMarker();
+        //LatLng markerLoc = new LatLng(marker.markerLoc.latitude, marker.markerLoc.longitude);
+        //drawPts(userLoc, markerLoc);
+        //mMap.addMarker(new MarkerOptions().position(userLoc).title("Destination"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
     }
 
     /**
@@ -149,11 +165,11 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onStart() {
         super.onStart();
-
+        buildGoogleApiClient();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+        //AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
     @Override
@@ -162,7 +178,7 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        //AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
 

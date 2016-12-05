@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import android.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,6 +51,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class createMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -57,19 +59,19 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
     private Marker marker;
 
     private GoogleMap mMap;
-    private GoogleApiClient client;
+    private GoogleApiClient client_Geodata, client_Place;
 
     protected LocationManager locationManager;
     protected LocationListener locationListener;
     protected Context context;
     protected Location mLastLocation;
 
-    private List<Marker> markers;
+    private List<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.travel);
+        setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -89,7 +91,7 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
 
-        client = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
+        //client = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
 
         //Makes the global user the user here
         Globals globals = ((Globals)getApplicationContext());
@@ -147,7 +149,7 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
             final Coor markerLoc = new Coor(address.getLatitude(), address.getLongitude());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Enter Marker Name:");
+            builder.setTitle("Enter Marrker Name:");
 
             final EditText input = new EditText(this);
             builder.setView(input);
@@ -160,7 +162,7 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
                     markers.add(newMarker);
 
                     TextView markerListGUI = (TextView)findViewById(R.id.markerList);
-                    markerListGUI.append("\n    " + newMarker.name);
+                    markerListGUI.append("\n" + newMarker.getName());
 
                     //Check if there are ten markers
                     if(markers.size() >= 10) {
@@ -182,7 +184,7 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
         Map newMap = new Map(mapName.getText().toString(), markers);
 
         //Sends new map to the server
-        user.createMap(newMap);
+        //user.createMap(newMap);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Your new map has been saved on the server!");
@@ -247,14 +249,37 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
                 .build();
     }
 
+    private synchronized void buildGoogleApiClient_GeoData() {
+        client_Geodata = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
+
+    private synchronized void buildGoogleApiClient_Place_Detect() {
+        client_Place = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.PLACE_DETECTION_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
     @Override
     public void onStart() {
         super.onStart();
+        buildGoogleApiClient_GeoData();
+        //buildGoogleApiClient_Place_Detect();
+        //client = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+        client_Geodata.connect();
+        //client_Place.connect();
+        //AppIndex.AppIndexApi.start(client_Geodata, getIndexApiAction());
+        //AppIndex.AppIndexApi.start(client_Place, getIndexApiAction());
     }
 
     @Override
@@ -263,8 +288,10 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
+        //AppIndex.AppIndexApi.end(client_Geodata, getIndexApiAction());
+        //AppIndex.AppIndexApi.end(client_Place, getIndexApiAction());
+        client_Geodata.disconnect();
+        //client_Place.disconnect();
     }
 
     @Override
@@ -279,7 +306,7 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(client);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(client_Geodata);
         if (mLastLocation != null) {
             //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
             //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));

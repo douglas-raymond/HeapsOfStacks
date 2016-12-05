@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:inputType="textPostalAddress"
-            android:text="Search new point of interest here!"
+            android:hint="Search new point of interest here!"
             android:ems="10"
             android:id="@+id/addressName"
             android:layout_gravity="center" />
@@ -86,7 +86,7 @@
         </LinearLayout>
 
         <TextView
-            android:text="\n      TextView"
+            android:text=" "
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:id="@+id/markerList"

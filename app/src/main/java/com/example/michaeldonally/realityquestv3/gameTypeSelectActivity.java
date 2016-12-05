@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class gameTypeSelectActivity extends Activity {
-    private User user;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

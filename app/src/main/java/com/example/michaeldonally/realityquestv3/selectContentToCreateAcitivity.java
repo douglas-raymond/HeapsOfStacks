@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class selectContentToCreateAcitivity extends AppCompatActivity {
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,7 @@ public class selectContentToCreateAcitivity extends AppCompatActivity {
 
         //to get the current user
         Globals globals = ((Globals)getApplicationContext());
-        User currentUser = globals.getUser();
+        currentUser = globals.getUser();
 
         //Sets text box to users username
         username.setText(currentUser.getUsername());

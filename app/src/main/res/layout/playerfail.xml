@@ -44,16 +44,14 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/success"
         android:id="@+id/imageView5"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="105dp" />
 
     <TextView
-        android:text="Character Leveled Up!
-+200 exp
-New Avatar Unlocked"
+        android:text="You failed!
+Better luck next time!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView5"

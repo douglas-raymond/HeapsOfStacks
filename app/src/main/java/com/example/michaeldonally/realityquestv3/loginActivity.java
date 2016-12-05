@@ -17,11 +17,6 @@ public class loginActivity extends Activity {
         String username = user.getText().toString();
         String password = pass.getText().toString();
 
-        //Here we need to send the username and password to the server and depending on the result either display an error message or proceed
-        //Maybe a while loop
-
-
-
         //Creates a user before updating the global one, must check validity before this, work will Tyler
         User currentUser = new User(username, password);
 
@@ -38,18 +33,18 @@ public class loginActivity extends Activity {
     }
 
     public void onSignUp(View view){
+        EditText user = (EditText) findViewById(R.id.username);
+        EditText pass = (EditText) findViewById(R.id.password);
+
+        final String username = user.getText().toString();
+        final String password = pass.getText().toString();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter new username and password:");
+        builder.setTitle("Are you sure you want to create a new user?").setMessage("Username: " + username + "\n Password: " + password);
 
-        final EditText newUsername = new EditText(this);
-        final EditText newPassword = new EditText(this);
-
-        builder.setView(newUsername);
-        builder.setView(newPassword);
-
-        builder.setPositiveButton("Confirm?", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                User newUser = new User(newUsername.getText().toString(), newPassword.getText().toString());
+                User newUser = new User(username, password);
 
                 //CALL TO ADD TO SERVER GOES HERE
 

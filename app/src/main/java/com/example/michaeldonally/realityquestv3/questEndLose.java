@@ -1,37 +1,33 @@
 package com.example.michaeldonally.realityquestv3;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-public class SelectMapActivity extends Activity {
+public class questEndLose extends AppCompatActivity {
     User currentUser;
-    Map demoMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_map);
+        setContentView(R.layout.playerfail);
 
+        TextView username = (TextView)findViewById(R.id.usernameText);
+
+        //to get the current user
         Globals globals = ((Globals)getApplicationContext());
         currentUser = globals.getUser();
 
-        TextView username = (TextView)findViewById(R.id.usernameText);
+        //Sets text box to users username
         username.setText(currentUser.getUsername());
-
-        demoMap = globals.getMap();
     }
 
-    public void onNext(View view) {
-        currentUser.character.setGameMap(demoMap);
+    public void onRate(View view) {
+        //Sends rating to the server
 
-        Intent intent = new Intent(SelectMapActivity.this, TravelActivity.class);
+        Intent intent = new Intent(questEndLose.this, SelectMapActivity.class);
         startActivity(intent);
     }
 }

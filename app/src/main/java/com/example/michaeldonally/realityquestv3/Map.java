@@ -43,6 +43,10 @@ public class Map {
         this.creator = name;
     }
 
+    public Marker getFirstMarker() {
+        return markers.get(0);
+    }
+
     //Will be called whenever an event is completed to check if the game has finished
     public boolean gameFinished() {
         completedMarkers++;

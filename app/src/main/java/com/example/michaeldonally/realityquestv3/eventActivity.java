@@ -89,10 +89,17 @@ public class eventActivity extends AppCompatActivity {
                     user.getCharacter().incrementCompletedEvents();
 
                     if(user.getCharacter().getCompletedEvents() >= 10){
-                        //User has completed 10 events and so goes to the victory screen
-                        Intent intent = new Intent(eventActivity.this, questEnd.class);
+                        Intent intent;
+                        if(user.character.getLevel() < 15){
+                            intent = new Intent(eventActivity.this, questEndLose.class);
+                        } else {
+                            intent = new Intent(eventActivity.this, questEnd.class);
+                        }
+                        startActivity(intent);
+
                     } else {
                         //Havent completed ten yet return to the travel screen
+                        user.character.setCurrMarker();
                         Intent intent = new Intent(eventActivity.this, TravelActivity.class);
                         startActivity(intent);
                     }
