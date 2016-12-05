@@ -1,5 +1,8 @@
 package com.example.michaeldonally.realityquestv3;
 
+import java.net.Authenticator;
+import java.util.ArrayList;
+
 /**
  * Created by Michael Donally on 11/8/2016.
  */
@@ -24,10 +27,12 @@ public class User {
 
     public void createEvent(Event e) {
         //Sends e to be saved on server
+        RequestManager.getInstance().uploadEvent(e);
     }
 
     public void createMap(Map m) {
         //Sends m to be saved on server
+        RequestManager.getInstance().uploadMap(m);
     }
 
     public String[] getMapList() {
@@ -35,9 +40,9 @@ public class User {
         return null;
     }
 
-    public Event getEvent() {
+    public void getEvent(ResponseListener<Event> listener) {
         //Should receive random event from the server
-        return null;
+        RequestManager.getInstance().getRandomEvent(listener);
     }
 
     public void updateUserList(User u) {
@@ -47,13 +52,15 @@ public class User {
     public User getUserData(String username, String password) {
         //Sends user name and password to the server that returns the apropriate user object
 
-        User user = RequestManager.getInstance().getUserDetails(username, password);
+        // User user = RequestManager.getInstance().getUserDetails(username, password);
 
-        if(user == null) {
-            return null;
-        } else {
-            return user;
-        }
+//        if(user == null) {
+//            return null;
+//        } else {
+//            return user;
+//        }
+
+        return new User();
     }
 
     public Map getMap(String title) {

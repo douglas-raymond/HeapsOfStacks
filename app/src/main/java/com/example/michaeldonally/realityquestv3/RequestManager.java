@@ -116,7 +116,7 @@ class RequestManager {
 
         try {
             parameters.put("title", event.name);
-            parameters.put("imageId", 0);
+            parameters.put("image", event.imageLoc);
 
             JSONArray options = new JSONArray();
             for (int i = 0; i < event.options.length; i++) {
@@ -242,8 +242,7 @@ class RequestManager {
                 try {
                     event.name = response.getString("title");
 
-                    // ALSO LOAD THE EVENT IMAGE HERE
-                    // lol nvm there are no images
+                    event.imageLoc = response.getString("image");
 
                     JSONArray options = response.getJSONArray("options");
                     for (int i = 0; i < 4; i++) {

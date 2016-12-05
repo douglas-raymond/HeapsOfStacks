@@ -24,7 +24,7 @@ public class Event_Activity3 extends AppCompatActivity {
     }
 
     public void onSubmit(View view){
-        Intent intent = new Intent(this, QuestEnd.class);
+        Intent intent = new Intent(this, questEnd.class);
         mediaplayer.stop();
         startActivity(intent);
     }

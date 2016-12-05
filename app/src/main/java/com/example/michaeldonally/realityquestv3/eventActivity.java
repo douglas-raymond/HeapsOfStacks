@@ -30,7 +30,13 @@ public class eventActivity extends AppCompatActivity {
         username.setText(user.getUsername());
 
         //Gets the event globally
-        currentEvent = globals.getEvent();
+        // currentEvent = globals.getEvent();
+        user.getEvent(new ResponseListener<Event>() {
+            @Override
+            public void getResult(Event event) {
+                currentEvent = event;
+            }
+        });
 
         //Sets the name
         TextView eventName = (TextView)findViewById(R.id.eventName);
