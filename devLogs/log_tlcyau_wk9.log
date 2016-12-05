@@ -3,3 +3,6 @@
 Group meeting: decided to have creation of events separate from creating map markers
 Changed creator choices to: New Map or New Event
 Made additional changes to event creation screen: click on removed image button, made click on screen to add sprite image
+
+optional_creation.xml
+Edited event_creation, maker_event
