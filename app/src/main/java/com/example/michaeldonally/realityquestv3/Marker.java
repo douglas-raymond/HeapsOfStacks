@@ -19,8 +19,6 @@ public class Marker {
         this.markerLoc = c;
     }
 
-    public Marker() {}
-
     public Marker(String n, Coor c){
         this.name = n;
         this.markerLoc = c;

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import android.location.LocationListener;
+
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -64,6 +66,7 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
     protected LocationListener locationListener;
     protected Context context;
     protected Location mLastLocation;
+    private LocationRequest mLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +108,7 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
     private synchronized void buildGoogleApiClient() {
         client = new GoogleApiClient
                 .Builder(this)
-                .addApi(Places.GEO_DATA_API)
+                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -138,12 +141,15 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
 
+        LatLng m1 = new LatLng(45.371317, -75.701476);
+
+
         //LatLng userLoc = getCurrentPos();
         //marker = user.character.getCurrMarker();
         //LatLng markerLoc = new LatLng(marker.markerLoc.latitude, marker.markerLoc.longitude);
         //drawPts(userLoc, markerLoc);
-        //mMap.addMarker(new MarkerOptions().position(userLoc).title("Destination"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
+        mMap.addMarker(new MarkerOptions().position(m1).title("Destination"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(m1));
     }
 
     /**
@@ -183,7 +189,7 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
+    public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -194,6 +200,11 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+        //mLocationRequest = LocationRequest.create();
+        //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        //mLocationRequest.setInterval(10); // Update location every second
+
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(client);
         if (mLastLocation != null) {
             //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
@@ -218,6 +229,10 @@ public class TravelActivity extends FragmentActivity implements OnMapReadyCallba
         }
     }
 
+    public void goToEvent(View view) {
+        Intent intent = new Intent(TravelActivity.this, eventActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onConnectionSuspended(int i) {

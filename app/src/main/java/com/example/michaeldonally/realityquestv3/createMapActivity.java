@@ -149,7 +149,7 @@ public class createMapActivity extends FragmentActivity implements OnMapReadyCal
             final Coor markerLoc = new Coor(address.getLatitude(), address.getLongitude());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Enter Marrker Name:");
+            builder.setTitle("Enter Marker Name:");
 
             final EditText input = new EditText(this);
             builder.setView(input);

@@ -30,17 +30,11 @@ public class eventActivity extends AppCompatActivity {
         username.setText(user.getUsername());
 
         //Gets the event globally
-        // currentEvent = globals.getEvent();
-        user.getEvent(new ResponseListener<Event>() {
-            @Override
-            public void getResult(Event event) {
-                currentEvent = event;
-            }
-        });
+        currentEvent = globals.getEvent();
 
         //Sets the name
         TextView eventName = (TextView)findViewById(R.id.eventName);
-        eventName.setText(currentEvent.getName());
+        eventName.setText("          " + currentEvent.getName());
 
         //Sets the image
         ImageView image = (ImageView)findViewById(R.id.image);
@@ -106,7 +100,7 @@ public class eventActivity extends AppCompatActivity {
                     } else {
                         //Havent completed ten yet return to the travel screen
                         user.character.setCurrMarker();
-                        Intent intent = new Intent(eventActivity.this, TravelActivity.class);
+                        Intent intent = new Intent(eventActivity.this, questEnd.class);
                         startActivity(intent);
                     }
 

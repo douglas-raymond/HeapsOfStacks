@@ -17,7 +17,7 @@ public class Globals extends Application {
     private Event event1 = new Event("Goblin Monster", "Attacked by a Goblin!", testString, "goblin");
     //Need to create a global event for testing
 
-    List<Marker> markers = new ArrayList<>();
+    private List<Marker> markers = new ArrayList<>();
 
     Option opt1 = new Option("ATTACK", 5, -5, 5);
     Option opt2 = new Option("Flee", 0, -5, 7);

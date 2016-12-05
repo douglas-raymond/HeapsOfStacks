@@ -10,9 +10,7 @@ public class Option {
     int punishment;
     int chance;
 
-    public Option() {}
-
-    public Option(String t, int r, int c, int p) {
+    public Option(String t, int r, int p, int c) {
         this.reward = r;
         this.punishment = p;
         this.chance = c;
