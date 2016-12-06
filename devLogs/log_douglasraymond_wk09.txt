@@ -1,0 +1,2 @@
+Week 9
+Met with our TA to go over the architecture and design for our app. 

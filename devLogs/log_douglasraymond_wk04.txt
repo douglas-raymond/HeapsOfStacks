@@ -1,0 +1,2 @@
+Week 4
+Experimented with google maps API to see how best to display the map on the screen.

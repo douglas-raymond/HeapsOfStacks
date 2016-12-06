@@ -1,0 +1,2 @@
+Week 6
+Did not work a lot on the project during week but decided on implementing a coordinate list in map.java

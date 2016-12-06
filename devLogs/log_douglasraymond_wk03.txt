@@ -1,0 +1,2 @@
+Week 3
+Scope of program migrated towards a game instead of just being a tool, events will be created autonomously when a player comes within the radius of a marker.

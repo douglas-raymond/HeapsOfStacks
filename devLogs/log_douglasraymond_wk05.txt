@@ -1,0 +1,2 @@
+Week 5
+Worked on adding markers to the map and looking at how to store the coordinates for them
