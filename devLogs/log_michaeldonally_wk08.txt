@@ -1,0 +1,5 @@
+Week of Nov 7th
+
+Been adding in screens as delivered by Terrence and making them functional.
+Been planning out how to use a facade pattern for out eventActivity.
+Filling in some of the more trivial methods.

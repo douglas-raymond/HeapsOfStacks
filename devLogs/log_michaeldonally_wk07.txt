@@ -1,0 +1,4 @@
+Week of Oct 31st
+
+Have been adding in the GUI's as Terrence completes them and linking them to the master versions code.
+Been changing the design periodically to better fit our system and scope.

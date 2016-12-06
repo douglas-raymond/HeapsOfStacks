@@ -1,0 +1,4 @@
+Week of Nov 14th
+
+Been working with Terrence and we decided to split the create map and create event proceses to streamline
+the creation process. 

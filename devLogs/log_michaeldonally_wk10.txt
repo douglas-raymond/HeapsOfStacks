@@ -1,0 +1,4 @@
+Week of Nov 21st
+
+The code is comig to completion. I am nearly done all of the methods for all classes, and the 
+background control runs as it should. Waiting on Douglas' map activities to proceed.

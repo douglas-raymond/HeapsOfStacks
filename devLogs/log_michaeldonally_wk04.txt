@@ -1,0 +1,4 @@
+Week of Oct 10
+
+Starting to design the UML and overall architecture of how our system will ultimately work.
+Once it is done I will give it to the other members to help their work.

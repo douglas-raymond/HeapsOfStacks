@@ -1,0 +1,5 @@
+Week of Oct 3rd
+
+Scope of project has changed from a tool to facilitate LARPing to a game in and of itself.
+All content is stil created by users, but the game can be played autonomously.
+Assiged Tyler to work on the server for storing our content.

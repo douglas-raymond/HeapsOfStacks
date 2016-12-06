@@ -1,0 +1,4 @@
+Week of Oct 17
+
+Began coding the skeleton code for our main project. Empty classes and methods.
+Focusing on encapsulation so that other people can add their code in to the master version easily.
